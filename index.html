@@ -726,6 +726,39 @@
     letter-spacing: 0.1em;
   }
 
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-left: 2rem;
+  }
+
+  .lang-btn {
+    background: transparent;
+    border: none;
+    color: var(--dim);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    padding: 0.35rem 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+
+  .lang-btn.active {
+    background: var(--gold);
+    color: var(--bg);
+  }
+
+  .lang-btn:not(.active):hover {
+    color: var(--white);
+  }
+
   /* ─── ANIMATIONS ─── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(30px); }
@@ -764,21 +797,27 @@
 
   <nav>
     <div class="nav-logo">Portfolio</div>
-    <ul class="nav-links">
-      <li><a href="#youtube">YouTube</a></li>
-      <li><a href="#fifaplus">FIFA+</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#contact">Contacto</a></li>
-    </ul>
+    <div style="display:flex; align-items:center;">
+      <ul class="nav-links">
+        <li><a href="#youtube">YouTube</a></li>
+        <li><a href="#fifaplus">FIFA+</a></li>
+        <li><a href="#skills" data-es="Skills" data-en="Skills">Skills</a></li>
+        <li><a href="#contact" data-es="Contacto" data-en="Contact">Contacto</a></li>
+      </ul>
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('es')">ES</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
   </nav>
 
   <div class="hero-content">
-    <p class="hero-eyebrow">Video Editor · Buenos Aires, Argentina</p>
+    <p class="hero-eyebrow" data-es="Video Editor · Buenos Aires, Argentina" data-en="Video Editor · Buenos Aires, Argentina">Video Editor · Buenos Aires, Argentina</p>
     <h1 class="hero-name">
       Matías<span>Korol</span>
     </h1>
-    <p class="hero-title">Edición de Video · Producción de Contenido Deportivo · IA Integrada</p>
-    <p class="hero-desc">
+    <p class="hero-title" data-es="Edición de Video · Producción de Contenido Deportivo · IA Integrada" data-en="Video Editing · Sports Content Production · AI-Integrated">Edición de Video · Producción de Contenido Deportivo · IA Integrada</p>
+    <p class="hero-desc" data-es="Editor de video especializado en contenidos deportivos de alto impacto. Acostumbrado a trabajar en tiempo real bajo presión, con experiencia en FIFA hace cuatro años, donde destacan las coberturas de Qatar 2022 y el Mundial de Clubes 2025, entre otros. Integro herramientas de inteligencia artificial en flujos de edición para potenciar el resultado creativo." data-en="Video editor specialized in high-impact sports content. Experienced in working in real time under pressure, with four years at FIFA covering Qatar 2022 and the Club World Cup 2025, among others. I integrate artificial intelligence tools into editing workflows to elevate the creative output.">
       Editor de video especializado en contenidos deportivos de alto impacto. Acostumbrado a trabajar en tiempo real bajo presión, con experiencia en FIFA hace cuatro años, donde destacan las coberturas de Qatar 2022 y el Mundial de Clubes 2025, entre otros. Integro herramientas de inteligencia artificial en flujos de edición para potenciar el resultado creativo.
     </p>
   </div>
@@ -786,15 +825,15 @@
   <div class="hero-stats">
     <div class="stat-item">
       <span class="stat-num">+110M</span>
-      <span class="stat-label">Vistas totales en YouTube</span>
+      <span class="stat-label" data-es="Vistas totales en YouTube" data-en="Total YouTube views">Vistas totales en YouTube</span>
     </div>
     <div class="stat-item">
       <span class="stat-num">30M</span>
-      <span class="stat-label">Video más visto</span>
+      <span class="stat-label" data-es="Video más visto" data-en="Most viewed video">Video más visto</span>
     </div>
     <div class="stat-item">
       <span class="stat-num">FIFA</span>
-      <span class="stat-label">Cliente · Qatar 2022 & CWC 2025</span>
+      <span class="stat-label" data-es="Cliente · Qatar 2022 & CWC 2025" data-en="Client · Qatar 2022 & CWC 2025">Cliente · Qatar 2022 & CWC 2025</span>
     </div>
   </div>
 </section>
@@ -804,8 +843,8 @@
 <section id="youtube">
   <div class="section-header">
     <span class="section-num">01</span>
-    <h2 class="section-title">Highlights · Qatar 2022</h2>
-    <p class="section-sub">YouTube · Producción en tiempo real durante el torneo</p>
+    <h2 class="section-title" data-es="Highlights · Qatar 2022" data-en="Highlights · Qatar 2022">Highlights · Qatar 2022</h2>
+    <p class="section-sub" data-es="YouTube · Producción en tiempo real durante el torneo" data-en="YouTube · Real-time production throughout the tournament">YouTube · Producción en tiempo real durante el torneo</p>
   </div>
 
   <!-- FEATURED: FINAL -->
@@ -817,10 +856,10 @@
       loading="lazy"
     >
     <div class="featured-overlay">
-      <p class="featured-badge">Video destacado</p>
-      <h3 class="featured-title">Argentina vs Francia<br>El Partido del Siglo</h3>
+      <p class="featured-badge" data-es="Video destacado" data-en="Featured video">Video destacado</p>
+      <h3 class="featured-title">Argentina vs Francia<br><span data-es="El Partido del Siglo" data-en="The Match of the Century">El Partido del Siglo</span></h3>
       <div class="featured-views">
-        <span class="views-count" id="views-zhEWqfP6V_w">30M</span> <span class="views-label">Vistas en YouTube</span>
+        <span class="views-count" id="views-zhEWqfP6V_w">30M</span> <span class="views-label" data-es="Vistas en YouTube" data-en="YouTube views">Vistas en YouTube</span>
       </div>
     </div>
     <div class="play-btn">
@@ -836,7 +875,7 @@
       </div>
       <div class="card-info">
         <div class="card-views"><span id="views-kL0IkvLrQLM">14M</span></div>
-        <div class="card-label">Brasil vs Serbia · La Noche de Richarlison</div>
+        <div class="card-label" data-es="Brasil vs Serbia · La Noche de Richarlison" data-en="Brazil vs Serbia · Richarlison's Night">Brasil vs Serbia · La Noche de Richarlison</div>
       </div>
     </a>
 
@@ -846,7 +885,7 @@
       </div>
       <div class="card-info">
         <div class="card-views"><span id="views-Rb6P2sdlJTE">13M</span></div>
-        <div class="card-label">Argentina vs México · Messi al Rescate del Mundial</div>
+        <div class="card-label" data-es="Argentina vs México · Messi al Rescate del Mundial" data-en="Argentina vs Mexico · Messi to the Rescue">Argentina vs México · Messi al Rescate del Mundial</div>
       </div>
     </a>
 
@@ -856,7 +895,7 @@
       </div>
       <div class="card-info">
         <div class="card-views"><span id="views-RJ4jlutcSbY">12M</span></div>
-        <div class="card-label">Portugal vs Ghana · La Noche de CR7</div>
+        <div class="card-label" data-es="Portugal vs Ghana · La Noche de CR7" data-en="Portugal vs Ghana · CR7's Night">Portugal vs Ghana · La Noche de CR7</div>
       </div>
     </a>
 
@@ -866,7 +905,7 @@
       </div>
       <div class="card-info">
         <div class="card-views"><span id="views-gbkgbbKZ1CA">11M</span></div>
-        <div class="card-label">Argentina vs Croacia · Messi Desata la Semifinal</div>
+        <div class="card-label" data-es="Argentina vs Croacia · Messi Desata la Semifinal" data-en="Argentina vs Croatia · Messi Unleashed">Argentina vs Croacia · Messi Desata la Semifinal</div>
       </div>
     </a>
 
@@ -876,7 +915,7 @@
       </div>
       <div class="card-info">
         <div class="card-views"><span id="views-c0-ZhEkEFtA">10M</span></div>
-        <div class="card-label">Brasil vs Corea del Sur · Samba en Octavos</div>
+        <div class="card-label" data-es="Brasil vs Corea del Sur · Samba en Octavos" data-en="Brazil vs South Korea · Samba in the Round of 16">Brasil vs Corea del Sur · Samba en Octavos</div>
       </div>
     </a>
 
@@ -886,7 +925,7 @@
       </div>
       <div class="card-info">
         <div class="card-views"><span id="views-0i-gsQJg7jc">10M</span></div>
-        <div class="card-label">Argentina vs Países Bajos · La Batalla de Lusail</div>
+        <div class="card-label" data-es="Argentina vs Países Bajos · La Batalla de Lusail" data-en="Argentina vs Netherlands · The Battle of Lusail">Argentina vs Países Bajos · La Batalla de Lusail</div>
       </div>
     </a>
 
@@ -896,7 +935,7 @@
       </div>
       <div class="card-info">
         <div class="card-views"><span id="views-KvSiRNO1BTY">9.2M</span></div>
-        <div class="card-label">Argentina vs Australia · El Zarpazo del 10</div>
+        <div class="card-label" data-es="Argentina vs Australia · El Zarpazo del 10" data-en="Argentina vs Australia · The No. 10's Claw">Argentina vs Australia · El Zarpazo del 10</div>
       </div>
     </a>
 
@@ -906,7 +945,7 @@
       </div>
       <div class="card-info">
         <div class="card-views"><span id="views-spLV1gF0fkI">8.8M</span></div>
-        <div class="card-label">Argentina vs Arabia Saudita · La Mayor Sorpresa del Siglo</div>
+        <div class="card-label" data-es="Argentina vs Arabia Saudita · La Mayor Sorpresa del Siglo" data-en="Argentina vs Saudi Arabia · The Greatest Upset of the Century">Argentina vs Arabia Saudita · La Mayor Sorpresa del Siglo</div>
       </div>
     </a>
   </div>
@@ -917,8 +956,8 @@
 <section style="padding-top: 0; padding-bottom: 5rem; padding-left: 6vw; padding-right: 6vw;">
   <div class="section-header">
     <span class="section-num">02</span>
-    <h2 class="section-title">Tandas de Penales · Mundiales</h2>
-    <p class="section-sub">YouTube · Compilaciones históricas</p>
+    <h2 class="section-title" data-es="Tandas de Penales · Mundiales" data-en="Penalty Shootouts · World Cups">Tandas de Penales · Mundiales</h2>
+    <p class="section-sub" data-es="YouTube · Compilaciones históricas" data-en="YouTube · Historical compilations">YouTube · Compilaciones históricas</p>
   </div>
 
   <div class="penalty-row" style="grid-template-columns: repeat(3, 1fr);">
@@ -928,7 +967,7 @@
       </div>
       <div class="card-info">
         <div class="card-views"><span id="views-PKn143kYPdg">1.2M</span></div>
-        <div class="card-label">Brasil vs Países Bajos · Taffarel para la Historia · Francia 1998</div>
+        <div class="card-label" data-es="Brasil vs Países Bajos · Taffarel para la Historia · Francia 1998" data-en="Brazil vs Netherlands · Taffarel Makes History · France 1998">Brasil vs Países Bajos · Taffarel para la Historia · Francia 1998</div>
       </div>
     </a>
 
@@ -938,7 +977,7 @@
       </div>
       <div class="card-info">
         <div class="card-views"><span id="views-lAJVri8pFn8">+500K</span></div>
-        <div class="card-label">Argentina vs Francia · La Tanda de la Gloria · Qatar 2022</div>
+        <div class="card-label" data-es="Argentina vs Francia · La Tanda de la Gloria · Qatar 2022" data-en="Argentina vs France · The Penalty Shootout of Glory · Qatar 2022">Argentina vs Francia · La Tanda de la Gloria · Qatar 2022</div>
       </div>
     </a>
 
@@ -948,7 +987,7 @@
       </div>
       <div class="card-info">
         <div class="card-views"><span id="views-wiiO9Fx5uLs">~500K</span></div>
-        <div class="card-label">Argentina vs Países Bajos · Penales de Lusail · Qatar 2022</div>
+        <div class="card-label" data-es="Argentina vs Países Bajos · Penales de Lusail · Qatar 2022" data-en="Argentina vs Netherlands · Lusail Penalties · Qatar 2022">Argentina vs Países Bajos · Penales de Lusail · Qatar 2022</div>
       </div>
     </a>
 
@@ -958,7 +997,7 @@
       </div>
       <div class="card-info">
         <div class="card-views"><span id="views-vCspZ8wZu1w">~200K</span></div>
-        <div class="card-label">Inglaterra vs Argentina · La Noche de Roa · Francia 1998</div>
+        <div class="card-label" data-es="Inglaterra vs Argentina · La Noche de Roa · Francia 1998" data-en="England vs Argentina · Roa's Night · France 1998">Inglaterra vs Argentina · La Noche de Roa · Francia 1998</div>
       </div>
     </a>
 
@@ -968,7 +1007,7 @@
       </div>
       <div class="card-info">
         <div class="card-views"><span id="views-tSUynh1YwJ4">+100K</span></div>
-        <div class="card-label">Croacia vs Brasil · Livakovic Rompe el Sueño · Qatar 2022</div>
+        <div class="card-label" data-es="Croacia vs Brasil · Livakovic Rompe el Sueño · Qatar 2022" data-en="Croatia vs Brazil · Livakovic Breaks the Dream · Qatar 2022">Croacia vs Brasil · Livakovic Rompe el Sueño · Qatar 2022</div>
       </div>
     </a>
 
@@ -978,7 +1017,7 @@
       </div>
       <div class="card-info">
         <div class="card-views"><span id="views-fDptnQBMM4M">+100K</span></div>
-        <div class="card-label">Francia vs Italia · Los Galos Conquistan Europa · Francia 1998</div>
+        <div class="card-label" data-es="Francia vs Italia · Los Galos Conquistan Europa · Francia 1998" data-en="France vs Italy · Les Bleus Conquer Europe · France 1998">Francia vs Italia · Los Galos Conquistan Europa · Francia 1998</div>
       </div>
     </a>
   </div>
@@ -989,52 +1028,52 @@
 <section id="fifaplus" class="fifahero-section">
   <div class="section-header">
     <span class="section-num">03</span>
-    <h2 class="section-title">FIFA+ · Mundial de Clubes 2025</h2>
-    <p class="section-sub">Producción editorial completa en portada FIFA+</p>
+    <h2 class="section-title" data-es="FIFA+ · Mundial de Clubes 2025" data-en="FIFA+ · Club World Cup 2025">FIFA+ · Mundial de Clubes 2025</h2>
+    <p class="section-sub" data-es="Producción editorial completa en portada FIFA+" data-en="Full editorial production on FIFA+ frontpage">Producción editorial completa en portada FIFA+</p>
   </div>
 
   <div class="fifaplus-grid">
 
     <a href="https://www.plus.fifa.com/es/player/44885597-920d-4221-aeae-a109dfd186c2?catalogId=7c3074cb-6954-4075-b1d9-bd630af5b55d&entryPoint=Default" target="_blank" rel="noopener" class="fifaplus-card">
       <div class="fifacard-icon">⚽</div>
-      <div class="fifacard-title">Todos los Goles del Torneo</div>
-      <p class="fifacard-desc">Compilación completa de todos los goles del Mundial de Clubes FIFA 2025. Selección, clasificación y edición integral del material.</p>
-      <div class="fifacard-link">Ver en FIFA+ <span>→</span></div>
+      <div class="fifacard-title" data-es="Todos los Goles del Torneo" data-en="All Goals of the Tournament">Todos los Goles del Torneo</div>
+      <p class="fifacard-desc" data-es="Compilación completa de todos los goles del Mundial de Clubes FIFA 2025. Selección, clasificación y edición integral del material." data-en="Complete compilation of every goal scored at the FIFA Club World Cup 2025. Full material selection, classification and editing.">Compilación completa de todos los goles del Mundial de Clubes FIFA 2025. Selección, clasificación y edición integral del material.</p>
+      <div class="fifacard-link" data-es="Ver en FIFA+" data-en="Watch on FIFA+">Ver en FIFA+ <span>→</span></div>
     </a>
 
     <a href="https://www.plus.fifa.com/es/content/best-goals-fifa-club-world-cup-2025tm-2025/2cd07783-ec7a-43b5-8763-3fcaaf077010" target="_blank" rel="noopener" class="fifaplus-card">
       <div class="fifacard-icon">🏆</div>
-      <div class="fifacard-title">Mejores Goles</div>
-      <p class="fifacard-desc">Ranking editorial de los goles más destacados del torneo. Criterio propio de selección y jerarquización del material.</p>
-      <div class="fifacard-link">Ver en FIFA+ <span>→</span></div>
+      <div class="fifacard-title" data-es="Mejores Goles" data-en="Best Goals">Mejores Goles</div>
+      <p class="fifacard-desc" data-es="Ranking editorial de los goles más destacados del torneo. Criterio propio de selección y jerarquización del material." data-en="Editorial ranking of the tournament's most outstanding goals. Own selection and ranking criteria.">Ranking editorial de los goles más destacados del torneo. Criterio propio de selección y jerarquización del material.</p>
+      <div class="fifacard-link" data-es="Ver en FIFA+" data-en="Watch on FIFA+">Ver en FIFA+ <span>→</span></div>
     </a>
 
     <a href="https://www.plus.fifa.com/es/content/best-assist-fifa-club-world-cup-2025tm-2025/8fb72772-1efc-4f6c-8950-7b71cafc8c1b" target="_blank" rel="noopener" class="fifaplus-card">
       <div class="fifacard-icon">🎯</div>
-      <div class="fifacard-title">Mejores Asistencias</div>
-      <p class="fifacard-desc">Curaduría y edición de las jugadas de creación más relevantes del Mundial de Clubes 2025.</p>
-      <div class="fifacard-link">Ver en FIFA+ <span>→</span></div>
+      <div class="fifacard-title" data-es="Mejores Asistencias" data-en="Best Assists">Mejores Asistencias</div>
+      <p class="fifacard-desc" data-es="Curaduría y edición de las jugadas de creación más relevantes del Mundial de Clubes 2025." data-en="Curation and editing of the most relevant creative plays from the Club World Cup 2025.">Curaduría y edición de las jugadas de creación más relevantes del Mundial de Clubes 2025.</p>
+      <div class="fifacard-link" data-es="Ver en FIFA+" data-en="Watch on FIFA+">Ver en FIFA+ <span>→</span></div>
     </a>
 
     <a href="https://www.plus.fifa.com/es/content/best-saves-fifa-club-world-cup-2025tm-2025/372a962e-9023-4a6d-8f17-e9163096c1f8" target="_blank" rel="noopener" class="fifaplus-card">
       <div class="fifacard-icon">🧤</div>
-      <div class="fifacard-title">Mejores Atajadas</div>
-      <p class="fifacard-desc">Selección y edición de las mejores intervenciones de los arqueros durante el torneo.</p>
-      <div class="fifacard-link">Ver en FIFA+ <span>→</span></div>
+      <div class="fifacard-title" data-es="Mejores Atajadas" data-en="Best Saves">Mejores Atajadas</div>
+      <p class="fifacard-desc" data-es="Selección y edición de las mejores intervenciones de los arqueros durante el torneo." data-en="Selection and editing of the best goalkeeping performances throughout the tournament.">Selección y edición de las mejores intervenciones de los arqueros durante el torneo.</p>
+      <div class="fifacard-link" data-es="Ver en FIFA+" data-en="Watch on FIFA+">Ver en FIFA+ <span>→</span></div>
     </a>
 
     <a href="https://www.plus.fifa.com/es/content/casi-grandes-goles-copa-mundial-de-clubes-de-la-fifa-2025tm-2025/9ad489b4-a55f-41a3-9c51-36647c0824fb" target="_blank" rel="noopener" class="fifaplus-card">
       <div class="fifacard-icon">💫</div>
-      <div class="fifacard-title">Casi Golazos</div>
-      <p class="fifacard-desc">Compilación de los momentos más cerca del gol que no terminaron en red. Un contenido de nicho con alto engagement.</p>
-      <div class="fifacard-link">Ver en FIFA+ <span>→</span></div>
+      <div class="fifacard-title" data-es="Casi Golazos" data-en="Almost Goals">Casi Golazos</div>
+      <p class="fifacard-desc" data-es="Compilación de los momentos más cerca del gol que no terminaron en red. Un contenido de nicho con alto engagement." data-en="Compilation of the closest near-miss moments that didn't end in a goal. Niche content with high engagement.">Compilación de los momentos más cerca del gol que no terminaron en red. Un contenido de nicho con alto engagement.</p>
+      <div class="fifacard-link" data-es="Ver en FIFA+" data-en="Watch on FIFA+">Ver en FIFA+ <span>→</span></div>
     </a>
 
     <a href="https://www.plus.fifa.com/es/content/top-defending-moments-fifa-club-world-cup-2025tm-2025/2f5b5f2e-1819-4e6a-b0b2-f2d43620af9e" target="_blank" rel="noopener" class="fifaplus-card">
       <div class="fifacard-icon">🛡️</div>
-      <div class="fifacard-title">Salvadas de Defensores</div>
-      <p class="fifacard-desc">Curaduría de las mejores jugadas defensivas del torneo, visibilizando un aspecto subestimado del juego.</p>
-      <div class="fifacard-link">Ver en FIFA+ <span>→</span></div>
+      <div class="fifacard-title" data-es="Salvadas de Defensores" data-en="Defensive Saves">Salvadas de Defensores</div>
+      <p class="fifacard-desc" data-es="Curaduría de las mejores jugadas defensivas del torneo, visibilizando un aspecto subestimado del juego." data-en="Curation of the best defensive plays of the tournament, highlighting an underrated aspect of the game.">Curaduría de las mejores jugadas defensivas del torneo, visibilizando un aspecto subestimado del juego.</p>
+      <div class="fifacard-link" data-es="Ver en FIFA+" data-en="Watch on FIFA+">Ver en FIFA+ <span>→</span></div>
     </a>
 
   </div>
@@ -1045,43 +1084,43 @@
 <section id="skills" class="skills-section">
   <div class="section-header">
     <span class="section-num">04</span>
-    <h2 class="section-title">Herramientas & Skills</h2>
+    <h2 class="section-title" data-es="Herramientas & Skills" data-en="Tools & Skills">Herramientas & Skills</h2>
   </div>
 
   <div class="skills-grid">
     <div class="skill-block">
-      <p class="skill-category">Edición</p>
+      <p class="skill-category" data-es="Edición" data-en="Editing">Edición</p>
       <ul class="skill-list">
         <li>Adobe Premiere Pro</li>
         <li>DaVinci Resolve</li>
         <li>After Effects</li>
-        <li>Edición en tiempo real</li>
+        <li data-es="Edición en tiempo real" data-en="Real-time editing">Edición en tiempo real</li>
       </ul>
     </div>
     <div class="skill-block">
-      <p class="skill-category">IA Integrada</p>
+      <p class="skill-category" data-es="IA Integrada" data-en="AI-Integrated">IA Integrada</p>
       <ul class="skill-list">
         <li>RunwayML</li>
         <li>ElevenLabs</li>
         <li>Sora / Gen-3</li>
-        <li>Automatización de flujos</li>
+        <li data-es="Automatización de flujos" data-en="Workflow automation">Automatización de flujos</li>
       </ul>
     </div>
     <div class="skill-block">
-      <p class="skill-category">Producción</p>
+      <p class="skill-category" data-es="Producción" data-en="Production">Producción</p>
       <ul class="skill-list">
         <li>Logging & clasificación</li>
-        <li>Curaduría editorial</li>
-        <li>Producción bajo presión</li>
-        <li>Selección de material</li>
+        <li data-es="Curaduría editorial" data-en="Editorial curation">Curaduría editorial</li>
+        <li data-es="Producción bajo presión" data-en="Production under pressure">Producción bajo presión</li>
+        <li data-es="Selección de material" data-en="Material selection">Selección de material</li>
       </ul>
     </div>
     <div class="skill-block">
-      <p class="skill-category">Contexto</p>
+      <p class="skill-category" data-es="Contexto" data-en="Context">Contexto</p>
       <ul class="skill-list">
         <li>FIFA · Qatar 2022</li>
         <li>FIFA · CWC 2025</li>
-        <li>Contenido deportivo</li>
+        <li data-es="Contenido deportivo" data-en="Sports content">Contenido deportivo</li>
         <li>YouTube & Streaming</li>
       </ul>
     </div>
@@ -1093,7 +1132,7 @@
 <section id="contact" class="contact-section">
   <div class="contact-inner">
     <h2 class="contact-cta">
-      Trabajemos<br><em>juntos.</em>
+      <span data-es="Trabajemos" data-en="Let's work">Trabajemos</span><br><em data-es="juntos." data-en="together.">juntos.</em>
     </h2>
     <div class="contact-links">
       <a href="mailto:matikorol@gmail.com" class="contact-link">
@@ -1101,7 +1140,7 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </div>
         <div class="contact-link-text">
-          <span class="contact-link-label">Email</span>
+          <span class="contact-link-label" data-es="Email" data-en="Email">Email</span>
           <span class="contact-link-value">matikorol@gmail.com</span>
         </div>
       </a>
@@ -1110,7 +1149,7 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="#C9A84C"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
         </div>
         <div class="contact-link-text">
-          <span class="contact-link-label">LinkedIn</span>
+          <span class="contact-link-label" data-es="LinkedIn" data-en="LinkedIn">LinkedIn</span>
           <span class="contact-link-value">Matías Korol</span>
         </div>
       </a>
@@ -1120,12 +1159,50 @@
 
 
 <footer>
-  <p>© 2026 · Matías Korol · Video Editor</p>
-  <p>Buenos Aires, Argentina</p>
+  <p data-es="© 2026 · Matías Korol · Video Editor" data-en="© 2026 · Matías Korol · Video Editor">© 2026 · Matías Korol · Video Editor</p>
+  <p data-es="Buenos Aires, Argentina" data-en="Buenos Aires, Argentina">Buenos Aires, Argentina</p>
 </footer>
 
 <script>
-  const YT_API_KEY = 'AIzaSyBXVyQ8P-mnuyJn9nD2lH_hfWsRtWTwWQg';
+  // ─── LANGUAGE SWITCHER ───
+  function setLang(lang) {
+    document.querySelectorAll('[data-es][data-en]').forEach(el => {
+      const text = el.getAttribute(`data-${lang}`);
+      if (!text) return;
+      // If element has child elements (like spans inside), only update text nodes
+      if (el.children.length === 0) {
+        el.textContent = text;
+      } else {
+        // For elements with children (like featured-title span), handle via data attr only
+        el.textContent = text;
+      }
+    });
+
+    // Nav contact link
+    document.querySelectorAll('.nav-links a[data-es]').forEach(el => {
+      el.textContent = el.getAttribute(`data-${lang}`);
+    });
+
+    // Update active button
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent === lang.toUpperCase());
+    });
+
+    // Update FIFA+ link text (has a child span with arrow)
+    document.querySelectorAll('.fifacard-link[data-es]').forEach(el => {
+      const txt = el.getAttribute(`data-${lang}`);
+      el.innerHTML = `${txt} <span>→</span>`;
+    });
+
+    localStorage.setItem('lang', lang);
+  }
+
+  // Restore saved language on load
+  const savedLang = localStorage.getItem('lang');
+  if (savedLang && savedLang !== 'es') setLang(savedLang);
+</script>
+
+ = 'AIzaSyBXVyQ8P-mnuyJn9nD2lH_hfWsRtWTwWQg';
 
   const VIDEO_IDS = [
     'zhEWqfP6V_w',
