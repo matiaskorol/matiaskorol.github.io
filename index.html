@@ -806,8 +806,8 @@
         <li><a href="#contact" data-es="Contacto" data-en="Contact">Contacto</a></li>
       </ul>
       <div class="lang-toggle">
-        <button class="lang-btn active" onclick="setLang('es')">ES</button>
-        <button class="lang-btn" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('es')">ES</button>
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
       </div>
     </div>
   </nav>
@@ -1198,9 +1198,9 @@
     localStorage.setItem('lang', lang);
   }
 
-  // Restore saved language on load
-  const savedLang = localStorage.getItem('lang');
-  if (savedLang && savedLang !== 'es') setLang(savedLang);
+  // Restore saved language on load, default to English
+  const savedLang = localStorage.getItem('lang') || 'en';
+  setLang(savedLang);
 </script>
 
 <script>
