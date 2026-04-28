@@ -657,6 +657,72 @@
     color: var(--gold);
   }
 
+  /* ─── CV DOWNLOAD BUTTONS ─── */
+  .cv-download-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .cv-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--white);
+    text-decoration: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cv-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+    z-index: 0;
+  }
+
+  .cv-btn:hover::before { transform: scaleX(1); }
+
+  .cv-btn:hover {
+    color: var(--bg);
+    border-color: var(--gold);
+  }
+
+  .cv-btn svg, .cv-btn span { position: relative; z-index: 1; }
+
+  .cv-btn-label {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cv-btn-sub {
+    font-size: 0.65rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--dim);
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .cv-btn:hover .cv-btn-sub { color: var(--bg); }
+
   .contact-links {
     display: flex;
     flex-direction: column;
@@ -1135,6 +1201,23 @@
     <h2 class="contact-cta">
       <span data-es="Trabajemos" data-en="Let's work">Trabajemos</span><br><em data-es="juntos." data-en="together.">juntos.</em>
     </h2>
+    <div class="cv-download-group">
+      <a href="CV_Matias_Korol_2026.pdf" download class="cv-btn" id="cv-btn-es">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span class="cv-btn-label">
+          <span>Descargar CV</span>
+          <span class="cv-btn-sub">Versión Español · PDF</span>
+        </span>
+      </a>
+      <a href="Matias_Korol_Resume.pdf" download class="cv-btn" id="cv-btn-en">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span class="cv-btn-label">
+          <span>Download Resume</span>
+          <span class="cv-btn-sub">English Version · PDF</span>
+        </span>
+      </a>
+    </div>
+
     <div class="contact-links">
       <a href="mailto:matikorol@gmail.com" class="contact-link">
         <div class="contact-link-icon">
@@ -1194,6 +1277,12 @@
       const txt = el.getAttribute(`data-${lang}`);
       el.innerHTML = `${txt} <span>→</span>`;
     });
+
+    // CV buttons: show only the one matching the active language
+    const btnEs = document.getElementById('cv-btn-es');
+    const btnEn = document.getElementById('cv-btn-en');
+    if (btnEs) btnEs.style.display = lang === 'es' ? 'inline-flex' : 'none';
+    if (btnEn) btnEn.style.display = lang === 'en' ? 'inline-flex' : 'none';
 
     localStorage.setItem('lang', lang);
   }
