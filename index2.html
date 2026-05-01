@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Video Editor</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --white: #F5F2EC;
+    --dim: #9A9589;
+    --bg: #0A0A08;
+    --bg2: #111110;
+    --bg3: #1A1A17;
+    --border: rgba(201,168,76,0.18);
+    --red-fifa: #C0392B;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 0 6vw;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0; right: 0;
+    height: 200px;
+    background: linear-gradient(to bottom, transparent, var(--bg));
+    z-index: 1;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 50%, rgba(201,168,76,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(192,57,43,0.05) 0%, transparent 60%);
+  }
+
+  /* Diagonal line accent */
+  .hero-bg::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 15%;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, var(--gold) 40%, var(--gold) 60%, transparent);
+    opacity: 0.15;
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0;
+    position: relative;
+    z-index: 2;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--dim);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    padding: 6vh 0 4vh;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(4.5rem, 12vw, 11rem);
+    line-height: 0.9;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3em;
+  }
+
+  .hero-name span {
+    display: block;
+    color: var(--gold);
+  }
+
+  .hero-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-desc {
+    max-width: 560px;
+    font-size: 1rem;
+    color: #8A877E;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3.5rem;
+    position: relative;
+    z-index: 2;
+    padding-bottom: 3rem;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 3rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-top: 0.3rem;
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    padding: 6rem 6vw;
+    position: relative;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .section-sub {
+    margin-left: auto;
+    font-size: 0.8rem;
+    color: var(--dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    max-width: 260px;
+    text-align: right;
+    line-height: 1.5;
+  }
+
+  /* ─── ROLE BADGE ─── */
+  .role-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(201,168,76,0.08);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+  }
+
+  /* ─── FEATURED VIDEO (FINAL) ─── */
+  .featured-video {
+    position: relative;
+    margin-bottom: 2rem;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    group: '';
+  }
+
+  .featured-video::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.15) 0%, transparent 50%, rgba(192,57,43,0.1) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .featured-thumb {
+    width: 100%;
+    aspect-ratio: 16/7;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease, filter 0.4s;
+    filter: brightness(0.75) saturate(0.9);
+  }
+
+  .featured-video:hover .featured-thumb {
+    transform: scale(1.02);
+    filter: brightness(0.9) saturate(1.1);
+  }
+
+  .featured-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2.5rem 3rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+  }
+
+  .featured-badge {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .featured-badge::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .featured-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2rem, 5vw, 4rem);
+    text-transform: uppercase;
+    line-height: 0.95;
+    margin-bottom: 1rem;
+    letter-spacing: 0.02em;
+  }
+
+  .featured-views {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .featured-views .views-label {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    align-self: flex-end;
+    padding-bottom: 0.4rem;
+  }
+
+  .play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.5);
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    backdrop-filter: blur(4px);
+    z-index: 3;
+  }
+
+  .featured-video:hover .play-btn {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.2);
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  .play-btn svg { margin-left: 4px; }
+
+  /* ─── VIDEO GRID ─── */
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .video-card {
+    position: relative;
+    border-radius: 3px;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--bg2);
+    border: 1px solid transparent;
+    transition: border-color 0.3s;
+    text-decoration: none;
+    display: block;
+  }
+
+  .video-card:hover {
+    border-color: var(--border);
+  }
+
+  .video-card:hover .card-thumb {
+    transform: scale(1.04);
+    filter: brightness(0.95) saturate(1.1);
+  }
+
+  .card-thumb-wrap {
+    overflow: hidden;
+    aspect-ratio: 16/9;
+  }
+
+  .card-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease, filter 0.3s;
+    filter: brightness(0.8) saturate(0.85);
+  }
+
+  .card-info {
+    padding: 1rem 1.2rem 1.2rem;
+  }
+
+  .card-views {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .card-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-top: 0.2rem;
+  }
+
+  /* ─── FIFA+ SECTION ─── */
+  .fifahero-section {
+    background: var(--bg2);
+  }
+
+  .fifaplus-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .fifaplus-card {
+    background: var(--bg2);
+    padding: 2rem 2rem 2.5rem;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fifaplus-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .fifaplus-card:hover { background: var(--bg3); }
+  .fifaplus-card:hover::before { transform: scaleX(1); }
+
+  .fifacard-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+
+  .fifacard-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .fifacard-desc {
+    font-size: 0.82rem;
+    color: var(--dim);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .fifacard-link {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: auto;
+  }
+
+  .fifacard-link span {
+    transition: transform 0.3s;
+    display: inline-block;
+  }
+
+  .fifaplus-card:hover .fifacard-link span {
+    transform: translateX(4px);
+  }
+
+  .solo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 2px;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    width: fit-content;
+    margin-bottom: 1rem;
+  }
+
+  /* ─── PENALTY SECTION ─── */
+  .penalty-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+  }
+
+  /* ─── SKILLS SECTION ─── */
+  .skills-section {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .skill-block {
+    background: var(--bg2);
+    padding: 2rem;
+  }
+
+  .skill-category {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+  }
+
+  .skill-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .skill-list li {
+    font-size: 0.9rem;
+    color: var(--dim);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .skill-list li::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ─── CONTACT ─── */
+  .contact-section {
+    min-height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-section::before {
+    content: 'CONTACT';
+    position: absolute;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 18vw;
+    color: rgba(201,168,76,0.03);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: -0.02em;
+  }
+
+  .contact-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4rem;
+  }
+
+  .contact-cta {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
+    text-transform: uppercase;
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+  }
+
+  .contact-cta em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  .hero-formation {
+    max-width: 560px;
+    font-size: 0.85rem;
+    color: var(--dim);
+    font-style: italic;
+    letter-spacing: 0.02em;
+    line-height: 1.7;
+    margin-top: -1.5rem;
+    margin-bottom: 3rem;
+    padding-left: 1rem;
+    border-left: 2px solid rgba(201,168,76,0.35);
+  }
+
+  /* ─── TRAYECTORIA ─── */
+  .trayectoria-section { background: var(--bg2); }
+
+  .trayectoria-timeline {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 3.5rem;
+    position: relative;
+  }
+
+  .trayectoria-timeline::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: calc(16.66% + 10px);
+    right: calc(16.66% + 10px);
+    height: 1px;
+    background: linear-gradient(to right, var(--gold), var(--gold));
+    opacity: 0.3;
+  }
+
+  .trayectoria-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 2rem;
+    position: relative;
+  }
+
+  .trayectoria-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    background: var(--bg2);
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+  }
+
+  .trayectoria-item:last-child .trayectoria-dot {
+    background: var(--gold);
+    box-shadow: 0 0 16px rgba(201,168,76,0.4);
+  }
+
+  .trayectoria-org {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+  }
+
+  .trayectoria-item:last-child .trayectoria-org { color: var(--gold); }
+
+  .trayectoria-role {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 0.5rem;
+  }
+
+  .trayectoria-period {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    color: rgba(201,168,76,0.5);
+  }
+
+  @media (max-width: 600px) {
+    .trayectoria-timeline {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .trayectoria-timeline::before { display: none; }
+    .trayectoria-item { align-items: flex-start; text-align: left; flex-direction: row; gap: 1.2rem; padding: 0; }
+    .trayectoria-dot { margin-bottom: 0; margin-top: 3px; }
+  }
+  .cv-download-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .cv-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--white);
+    text-decoration: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cv-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+    z-index: 0;
+  }
+
+  .cv-btn:hover::before { transform: scaleX(1); }
+
+  .cv-btn:hover {
+    color: var(--bg);
+    border-color: var(--gold);
+  }
+
+  .cv-btn svg, .cv-btn span { position: relative; z-index: 1; }
+
+  .cv-btn-label {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cv-btn-sub {
+    font-size: 0.65rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--dim);
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .cv-btn:hover .cv-btn-sub { color: var(--bg); }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    min-width: 280px;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    text-decoration: none;
+    color: var(--white);
+    transition: all 0.3s;
+    background: var(--bg2);
+  }
+
+  .contact-link:hover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.05);
+  }
+
+  .contact-link-icon {
+    width: 36px;
+    height: 36px;
+    background: rgba(201,168,76,0.1);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .contact-link-text {
+    flex: 1;
+  }
+
+  .contact-link-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dim);
+    display: block;
+  }
+
+  .contact-link-value {
+    font-size: 0.9rem;
+    color: var(--white);
+    display: block;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 2rem 6vw;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer p {
+    font-size: 0.75rem;
+    color: var(--dim);
+    letter-spacing: 0.1em;
+  }
+
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid rgba(201,168,76,0.5);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-left: 2.5rem;
+  }
+
+  .lang-btn {
+    background: transparent;
+    border: none;
+    color: var(--dim);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    padding: 0.6rem 1.3rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+
+  .lang-btn.active {
+    background: var(--gold);
+    color: var(--bg);
+  }
+
+  .lang-btn:not(.active):hover {
+    color: var(--white);
+    background: rgba(201,168,76,0.1);
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow { animation: fadeUp 0.8s ease both; }
+  .hero-name { animation: fadeUp 0.8s ease 0.1s both; }
+  .hero-title { animation: fadeUp 0.8s ease 0.2s both; }
+  .hero-desc { animation: fadeUp 0.8s ease 0.3s both; }
+  .hero-stats { animation: fadeUp 0.8s ease 0.4s both; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .fifaplus-grid { grid-template-columns: 1fr 1fr; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .penalty-row { grid-template-columns: 1fr; }
+    .contact-inner { flex-direction: column; align-items: flex-start; }
+    .hero-stats { gap: 2rem; flex-wrap: wrap; }
+  }
+
+  @media (max-width: 600px) {
+    .fifaplus-grid { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .video-grid { grid-template-columns: 1fr; }
+    nav .nav-links { display: none; }
+    section { padding: 4rem 5vw; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─────────────────────── HERO ─────────────────────── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <nav>
+    <div class="nav-logo">Portfolio</div>
+    <div style="display:flex; align-items:center;">
+      <ul class="nav-links">
+        <li><a href="#youtube">YouTube</a></li>
+        <li><a href="#fifaplus">FIFA+</a></li>
+        <li><a href="#skills" data-es="Skills" data-en="Skills">Skills</a></li>
+        <li><a href="#trayectoria" data-es="Trayectoria" data-en="Career">Trayectoria</a></li>
+        <li><a href="#contact" data-es="Contacto" data-en="Contact">Contacto</a></li>
+      </ul>
+      <div class="lang-toggle">
+        <button class="lang-btn" onclick="setLang('es')">ES</button>
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow" data-es="Editor de video · Buenos Aires, Argentina" data-en="Video Editor · Buenos Aires, Argentina">Editor de video · Buenos Aires, Argentina</p>
+    <h1 class="hero-name">
+      Matías<span>Korol</span>
+    </h1>
+    <p class="hero-title" data-es="Edición de Video · Producción de Contenido Deportivo · IA Integrada" data-en="Video Editing · Sports Content Production · AI-Integrated">Edición de Video · Producción de Contenido Deportivo · IA Integrada</p>
+    <p class="hero-desc" data-es="Editor de video especializado en contenidos deportivos de alto impacto. Acostumbrado a trabajar en tiempo real bajo presión, con experiencia en FIFA hace cuatro años, donde destacan las coberturas de Qatar 2022 y el Mundial de Clubes 2025, entre otros. Integro herramientas de inteligencia artificial en flujos de edición para potenciar el resultado creativo." data-en="Video editor specialized in high-impact sports content. Experienced in working in real time under pressure, with four years at FIFA covering Qatar 2022 and the Club World Cup 2025, among others. I integrate artificial intelligence tools into editing workflows to elevate the creative output.">
+      Editor de video especializado en contenidos deportivos de alto impacto. Acostumbrado a trabajar en tiempo real bajo presión, con experiencia en FIFA hace cuatro años, donde destacan las coberturas de Qatar 2022 y el Mundial de Clubes 2025, entre otros. Integro herramientas de inteligencia artificial en flujos de edición para potenciar el resultado creativo.
+    </p>
+    <p class="hero-formation" data-es="Mi formación como periodista en TN (Todo Noticias) y Radio POP 101.5 FM forjó el criterio narrativo que hoy está detrás de cada corte." data-en="My background as a journalist at TN (Todo Noticias) and Radio POP 101.5 FM forged the narrative instinct behind every edit.">Mi formación como periodista en TN (Todo Noticias) y Radio POP 101.5 FM forjó el criterio narrativo que hoy está detrás de cada corte.</p>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <span class="stat-num">+110M</span>
+      <span class="stat-label" data-es="Vistas totales en YouTube" data-en="Total YouTube views">Vistas totales en YouTube</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">30M</span>
+      <span class="stat-label" data-es="Video más visto" data-en="Most viewed video">Video más visto</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">FIFA</span>
+      <span class="stat-label" data-es="Cliente · Qatar 2022 & CWC 2025" data-en="Client · Qatar 2022 & CWC 2025">Cliente · Qatar 2022 & CWC 2025</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─────────────────────── YOUTUBE: HIGHLIGHTS QATAR ─────────────────────── -->
+<section id="youtube">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title" data-es="Highlights · Qatar 2022" data-en="Highlights · Qatar 2022">Highlights · Qatar 2022</h2>
+    <p class="section-sub" data-es="YouTube · Producción en tiempo real durante el torneo" data-en="YouTube · Real-time production throughout the tournament">YouTube · Producción en tiempo real durante el torneo</p>
+  </div>
+
+  <!-- FEATURED: FINAL -->
+  <a href="https://www.youtube.com/watch?v=zhEWqfP6V_w" target="_blank" rel="noopener" class="featured-video" data-video-id="zhEWqfP6V_w" style="display:block; text-decoration:none; color:inherit; margin-bottom: 1.5rem;">
+    <img
+      class="featured-thumb"
+      src="https://img.youtube.com/vi/zhEWqfP6V_w/maxresdefault.jpg"
+      alt="Final Qatar 2022"
+      loading="lazy"
+    >
+    <div class="featured-overlay">
+      <p class="featured-badge" data-es="Video destacado" data-en="Featured video">Video destacado</p>
+      <h3 class="featured-title">Argentina vs Francia<br><span data-es="El Partido del Siglo" data-en="The Match of the Century">El Partido del Siglo</span></h3>
+      <div class="featured-views">
+        <span class="views-count" id="views-zhEWqfP6V_w">30M</span> <span class="views-label" data-es="Vistas en YouTube" data-en="YouTube views">Vistas en YouTube</span>
+      </div>
+    </div>
+    <div class="play-btn">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="white"><path d="M7 4l10 6-10 6V4z"/></svg>
+    </div>
+  </a>
+
+  <!-- VIDEO GRID: RESTO DE HIGHLIGHTS -->
+  <div class="video-grid">
+    <a href="https://www.youtube.com/watch?v=kL0IkvLrQLM" target="_blank" rel="noopener" class="video-card" data-video-id="kL0IkvLrQLM">
+      <div class="card-thumb-wrap">
+        <img class="card-thumb" src="https://img.youtube.com/vi/kL0IkvLrQLM/maxresdefault.jpg" alt="Brasil vs Serbia" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-views"><span id="views-kL0IkvLrQLM">14M</span></div>
+        <div class="card-label" data-es="Brasil vs Serbia · La Noche de Richarlison" data-en="Brazil vs Serbia · Richarlison's Night">Brasil vs Serbia · La Noche de Richarlison</div>
+      </div>
+    </a>
+
+    <a href="https://www.youtube.com/watch?v=Rb6P2sdlJTE" target="_blank" rel="noopener" class="video-card" data-video-id="Rb6P2sdlJTE">
+      <div class="card-thumb-wrap">
+        <img class="card-thumb" src="https://img.youtube.com/vi/Rb6P2sdlJTE/maxresdefault.jpg" alt="Argentina vs México" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-views"><span id="views-Rb6P2sdlJTE">13M</span></div>
+        <div class="card-label" data-es="Argentina vs México · Messi al Rescate del Mundial" data-en="Argentina vs Mexico · Messi to the Rescue">Argentina vs México · Messi al Rescate del Mundial</div>
+      </div>
+    </a>
+
+    <a href="https://www.youtube.com/watch?v=RJ4jlutcSbY" target="_blank" rel="noopener" class="video-card" data-video-id="RJ4jlutcSbY">
+      <div class="card-thumb-wrap">
+        <img class="card-thumb" src="https://img.youtube.com/vi/RJ4jlutcSbY/maxresdefault.jpg" alt="Portugal vs Ghana" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-views"><span id="views-RJ4jlutcSbY">12M</span></div>
+        <div class="card-label" data-es="Portugal vs Ghana · La Noche de CR7" data-en="Portugal vs Ghana · CR7's Night">Portugal vs Ghana · La Noche de CR7</div>
+      </div>
+    </a>
+
+    <a href="https://www.youtube.com/watch?v=gbkgbbKZ1CA" target="_blank" rel="noopener" class="video-card" data-video-id="gbkgbbKZ1CA">
+      <div class="card-thumb-wrap">
+        <img class="card-thumb" src="https://img.youtube.com/vi/gbkgbbKZ1CA/maxresdefault.jpg" alt="Argentina vs Croacia" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-views"><span id="views-gbkgbbKZ1CA">11M</span></div>
+        <div class="card-label" data-es="Argentina vs Croacia · Messi Desata la Semifinal" data-en="Argentina vs Croatia · Messi Unleashed">Argentina vs Croacia · Messi Desata la Semifinal</div>
+      </div>
+    </a>
+
+    <a href="https://www.youtube.com/watch?v=c0-ZhEkEFtA" target="_blank" rel="noopener" class="video-card" data-video-id="c0-ZhEkEFtA">
+      <div class="card-thumb-wrap">
+        <img class="card-thumb" src="https://img.youtube.com/vi/c0-ZhEkEFtA/maxresdefault.jpg" alt="Brasil vs Corea del Sur" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-views"><span id="views-c0-ZhEkEFtA">10M</span></div>
+        <div class="card-label" data-es="Brasil vs Corea del Sur · Samba en Octavos" data-en="Brazil vs South Korea · Samba in the Round of 16">Brasil vs Corea del Sur · Samba en Octavos</div>
+      </div>
+    </a>
+
+    <a href="https://www.youtube.com/watch?v=0i-gsQJg7jc" target="_blank" rel="noopener" class="video-card" data-video-id="0i-gsQJg7jc">
+      <div class="card-thumb-wrap">
+        <img class="card-thumb" src="https://img.youtube.com/vi/0i-gsQJg7jc/maxresdefault.jpg" alt="Argentina vs Países Bajos" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-views"><span id="views-0i-gsQJg7jc">10M</span></div>
+        <div class="card-label" data-es="Argentina vs Países Bajos · La Batalla de Lusail" data-en="Argentina vs Netherlands · The Battle of Lusail">Argentina vs Países Bajos · La Batalla de Lusail</div>
+      </div>
+    </a>
+
+    <a href="https://www.youtube.com/watch?v=KvSiRNO1BTY" target="_blank" rel="noopener" class="video-card" data-video-id="KvSiRNO1BTY">
+      <div class="card-thumb-wrap">
+        <img class="card-thumb" src="https://img.youtube.com/vi/KvSiRNO1BTY/maxresdefault.jpg" alt="Argentina vs Australia" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-views"><span id="views-KvSiRNO1BTY">9.2M</span></div>
+        <div class="card-label" data-es="Argentina vs Australia · El Zarpazo del 10" data-en="Argentina vs Australia · The No. 10's Claw">Argentina vs Australia · El Zarpazo del 10</div>
+      </div>
+    </a>
+
+    <a href="https://www.youtube.com/watch?v=spLV1gF0fkI" target="_blank" rel="noopener" class="video-card" data-video-id="spLV1gF0fkI">
+      <div class="card-thumb-wrap">
+        <img class="card-thumb" src="https://img.youtube.com/vi/spLV1gF0fkI/maxresdefault.jpg" alt="Argentina vs Arabia Saudita" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-views"><span id="views-spLV1gF0fkI">8.8M</span></div>
+        <div class="card-label" data-es="Argentina vs Arabia Saudita · La Mayor Sorpresa del Siglo" data-en="Argentina vs Saudi Arabia · The Greatest Upset of the Century">Argentina vs Arabia Saudita · La Mayor Sorpresa del Siglo</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+
+<!-- ─────────────────────── YOUTUBE: PENALES ─────────────────────── -->
+<section style="padding-top: 0; padding-bottom: 5rem; padding-left: 6vw; padding-right: 6vw;">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title" data-es="Tandas de Penales · Mundiales" data-en="Penalty Shootouts · World Cups">Tandas de Penales · Mundiales</h2>
+    <p class="section-sub" data-es="YouTube · Compilaciones históricas" data-en="YouTube · Historical compilations">YouTube · Compilaciones históricas</p>
+  </div>
+
+  <div class="penalty-row" style="grid-template-columns: repeat(3, 1fr);">
+    <a href="https://www.youtube.com/watch?v=PKn143kYPdg" target="_blank" rel="noopener" class="video-card" data-video-id="PKn143kYPdg">
+      <div class="card-thumb-wrap">
+        <img class="card-thumb" src="https://img.youtube.com/vi/PKn143kYPdg/maxresdefault.jpg" alt="Brasil vs Países Bajos 1998" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-views"><span id="views-PKn143kYPdg">1.2M</span></div>
+        <div class="card-label" data-es="Brasil vs Países Bajos · Taffarel para la Historia · Francia 1998" data-en="Brazil vs Netherlands · Taffarel Makes History · France 1998">Brasil vs Países Bajos · Taffarel para la Historia · Francia 1998</div>
+      </div>
+    </a>
+
+    <a href="https://www.youtube.com/watch?v=lAJVri8pFn8" target="_blank" rel="noopener" class="video-card" data-video-id="lAJVri8pFn8">
+      <div class="card-thumb-wrap">
+        <img class="card-thumb" src="https://img.youtube.com/vi/lAJVri8pFn8/maxresdefault.jpg" alt="Argentina vs Francia 2022" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-views"><span id="views-lAJVri8pFn8">+500K</span></div>
+        <div class="card-label" data-es="Argentina vs Francia · La Tanda de la Gloria · Qatar 2022" data-en="Argentina vs France · The Penalty Shootout of Glory · Qatar 2022">Argentina vs Francia · La Tanda de la Gloria · Qatar 2022</div>
+      </div>
+    </a>
+
+    <a href="https://www.youtube.com/watch?v=wiiO9Fx5uLs" target="_blank" rel="noopener" class="video-card" data-video-id="wiiO9Fx5uLs">
+      <div class="card-thumb-wrap">
+        <img class="card-thumb" src="https://img.youtube.com/vi/wiiO9Fx5uLs/maxresdefault.jpg" alt="Argentina vs Países Bajos 2022" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-views"><span id="views-wiiO9Fx5uLs">~500K</span></div>
+        <div class="card-label" data-es="Argentina vs Países Bajos · Penales de Lusail · Qatar 2022" data-en="Argentina vs Netherlands · Lusail Penalties · Qatar 2022">Argentina vs Países Bajos · Penales de Lusail · Qatar 2022</div>
+      </div>
+    </a>
+
+    <a href="https://www.youtube.com/watch?v=vCspZ8wZu1w" target="_blank" rel="noopener" class="video-card" data-video-id="vCspZ8wZu1w">
+      <div class="card-thumb-wrap">
+        <img class="card-thumb" src="https://img.youtube.com/vi/vCspZ8wZu1w/maxresdefault.jpg" alt="Inglaterra vs Argentina 1998" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-views"><span id="views-vCspZ8wZu1w">~200K</span></div>
+        <div class="card-label" data-es="Inglaterra vs Argentina · La Noche de Roa · Francia 1998" data-en="England vs Argentina · Roa's Night · France 1998">Inglaterra vs Argentina · La Noche de Roa · Francia 1998</div>
+      </div>
+    </a>
+
+    <a href="https://www.youtube.com/watch?v=tSUynh1YwJ4" target="_blank" rel="noopener" class="video-card" data-video-id="tSUynh1YwJ4">
+      <div class="card-thumb-wrap">
+        <img class="card-thumb" src="https://img.youtube.com/vi/tSUynh1YwJ4/maxresdefault.jpg" alt="Croacia vs Brasil 2022" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-views"><span id="views-tSUynh1YwJ4">+100K</span></div>
+        <div class="card-label" data-es="Croacia vs Brasil · Livakovic Rompe el Sueño · Qatar 2022" data-en="Croatia vs Brazil · Livakovic Breaks the Dream · Qatar 2022">Croacia vs Brasil · Livakovic Rompe el Sueño · Qatar 2022</div>
+      </div>
+    </a>
+
+    <a href="https://www.youtube.com/watch?v=fDptnQBMM4M" target="_blank" rel="noopener" class="video-card" data-video-id="fDptnQBMM4M">
+      <div class="card-thumb-wrap">
+        <img class="card-thumb" src="https://img.youtube.com/vi/fDptnQBMM4M/maxresdefault.jpg" alt="Francia vs Italia 1998" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-views"><span id="views-fDptnQBMM4M">+100K</span></div>
+        <div class="card-label" data-es="Francia vs Italia · Los Galos Conquistan Europa · Francia 1998" data-en="France vs Italy · Les Bleus Conquer Europe · France 1998">Francia vs Italia · Los Galos Conquistan Europa · Francia 1998</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+
+<!-- ─────────────────────── FIFA+ ─────────────────────── -->
+<section id="fifaplus" class="fifahero-section">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title" data-es="FIFA+ · Mundial de Clubes 2025" data-en="FIFA+ · Club World Cup 2025">FIFA+ · Mundial de Clubes 2025</h2>
+    <p class="section-sub" data-es="Producción editorial completa en portada FIFA+" data-en="Full editorial production on FIFA+ frontpage">Producción editorial completa en portada FIFA+</p>
+  </div>
+
+  <div class="fifaplus-grid">
+
+    <a href="https://www.plus.fifa.com/es/player/44885597-920d-4221-aeae-a109dfd186c2?catalogId=7c3074cb-6954-4075-b1d9-bd630af5b55d&entryPoint=Default" target="_blank" rel="noopener" class="fifaplus-card">
+      <div class="fifacard-icon">⚽</div>
+      <div class="fifacard-title" data-es="Todos los Goles del Torneo" data-en="All Goals of the Tournament">Todos los Goles del Torneo</div>
+      <p class="fifacard-desc" data-es="Compilación completa de todos los goles del Mundial de Clubes FIFA 2025. Selección, clasificación y edición integral del material." data-en="Complete compilation of every goal scored at the FIFA Club World Cup 2025. Full material selection, classification and editing.">Compilación completa de todos los goles del Mundial de Clubes FIFA 2025. Selección, clasificación y edición integral del material.</p>
+      <div class="fifacard-link" data-es="Ver en FIFA+" data-en="Watch on FIFA+">Ver en FIFA+ <span>→</span></div>
+    </a>
+
+    <a href="https://www.plus.fifa.com/es/content/best-goals-fifa-club-world-cup-2025tm-2025/2cd07783-ec7a-43b5-8763-3fcaaf077010" target="_blank" rel="noopener" class="fifaplus-card">
+      <div class="fifacard-icon">🏆</div>
+      <div class="fifacard-title" data-es="Mejores Goles" data-en="Best Goals">Mejores Goles</div>
+      <p class="fifacard-desc" data-es="Ranking editorial de los goles más destacados del torneo. Criterio propio de selección y jerarquización del material." data-en="Editorial ranking of the tournament's most outstanding goals. Own selection and ranking criteria.">Ranking editorial de los goles más destacados del torneo. Criterio propio de selección y jerarquización del material.</p>
+      <div class="fifacard-link" data-es="Ver en FIFA+" data-en="Watch on FIFA+">Ver en FIFA+ <span>→</span></div>
+    </a>
+
+    <a href="https://www.plus.fifa.com/es/content/best-assist-fifa-club-world-cup-2025tm-2025/8fb72772-1efc-4f6c-8950-7b71cafc8c1b" target="_blank" rel="noopener" class="fifaplus-card">
+      <div class="fifacard-icon">🎯</div>
+      <div class="fifacard-title" data-es="Mejores Asistencias" data-en="Best Assists">Mejores Asistencias</div>
+      <p class="fifacard-desc" data-es="Curaduría y edición de las jugadas de creación más relevantes del Mundial de Clubes 2025." data-en="Curation and editing of the most relevant creative plays from the Club World Cup 2025.">Curaduría y edición de las jugadas de creación más relevantes del Mundial de Clubes 2025.</p>
+      <div class="fifacard-link" data-es="Ver en FIFA+" data-en="Watch on FIFA+">Ver en FIFA+ <span>→</span></div>
+    </a>
+
+    <a href="https://www.plus.fifa.com/es/content/best-saves-fifa-club-world-cup-2025tm-2025/372a962e-9023-4a6d-8f17-e9163096c1f8" target="_blank" rel="noopener" class="fifaplus-card">
+      <div class="fifacard-icon">🧤</div>
+      <div class="fifacard-title" data-es="Mejores Atajadas" data-en="Best Saves">Mejores Atajadas</div>
+      <p class="fifacard-desc" data-es="Selección y edición de las mejores intervenciones de los arqueros durante el torneo." data-en="Selection and editing of the best goalkeeping performances throughout the tournament.">Selección y edición de las mejores intervenciones de los arqueros durante el torneo.</p>
+      <div class="fifacard-link" data-es="Ver en FIFA+" data-en="Watch on FIFA+">Ver en FIFA+ <span>→</span></div>
+    </a>
+
+    <a href="https://www.plus.fifa.com/es/content/casi-grandes-goles-copa-mundial-de-clubes-de-la-fifa-2025tm-2025/9ad489b4-a55f-41a3-9c51-36647c0824fb" target="_blank" rel="noopener" class="fifaplus-card">
+      <div class="fifacard-icon">💫</div>
+      <div class="fifacard-title" data-es="Casi Golazos" data-en="Almost Goals">Casi Golazos</div>
+      <p class="fifacard-desc" data-es="Compilación de los momentos más cerca del gol que no terminaron en red. Un contenido de nicho con alto engagement." data-en="Compilation of the closest near-miss moments that didn't end in a goal. Niche content with high engagement.">Compilación de los momentos más cerca del gol que no terminaron en red. Un contenido de nicho con alto engagement.</p>
+      <div class="fifacard-link" data-es="Ver en FIFA+" data-en="Watch on FIFA+">Ver en FIFA+ <span>→</span></div>
+    </a>
+
+    <a href="https://www.plus.fifa.com/es/content/top-defending-moments-fifa-club-world-cup-2025tm-2025/2f5b5f2e-1819-4e6a-b0b2-f2d43620af9e" target="_blank" rel="noopener" class="fifaplus-card">
+      <div class="fifacard-icon">🛡️</div>
+      <div class="fifacard-title" data-es="Salvadas de Defensores" data-en="Defensive Saves">Salvadas de Defensores</div>
+      <p class="fifacard-desc" data-es="Curaduría de las mejores jugadas defensivas del torneo, visibilizando un aspecto subestimado del juego." data-en="Curation of the best defensive plays of the tournament, highlighting an underrated aspect of the game.">Curaduría de las mejores jugadas defensivas del torneo, visibilizando un aspecto subestimado del juego.</p>
+      <div class="fifacard-link" data-es="Ver en FIFA+" data-en="Watch on FIFA+">Ver en FIFA+ <span>→</span></div>
+    </a>
+
+  </div>
+</section>
+
+
+<!-- ─────────────────────── SKILLS ─────────────────────── -->
+<section id="skills" class="skills-section">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title" data-es="Herramientas & Skills" data-en="Tools & Skills">Herramientas & Skills</h2>
+  </div>
+
+  <div class="skills-grid">
+    <div class="skill-block">
+      <p class="skill-category" data-es="Edición" data-en="Editing">Edición</p>
+      <ul class="skill-list">
+        <li>Adobe Premiere Pro</li>
+        <li>After Effects</li>
+        <li>CapCut</li>
+        <li data-es="Edición en tiempo real" data-en="Real-time editing">Edición en tiempo real</li>
+      </ul>
+    </div>
+    <div class="skill-block">
+      <p class="skill-category" data-es="IA Integrada" data-en="AI-Integrated">IA Integrada</p>
+      <ul class="skill-list">
+        <li>RunwayML</li>
+        <li>ElevenLabs</li>
+        <li>TurboScribe</li>
+        <li data-es="Automatización de flujos" data-en="Workflow automation">Automatización de flujos</li>
+      </ul>
+    </div>
+    <div class="skill-block">
+      <p class="skill-category" data-es="Producción" data-en="Production">Producción</p>
+      <ul class="skill-list">
+        <li>Logging & clasificación</li>
+        <li data-es="Curaduría editorial" data-en="Editorial curation">Curaduría editorial</li>
+        <li data-es="Producción bajo presión" data-en="Production under pressure">Producción bajo presión</li>
+        <li data-es="Selección de material" data-en="Material selection">Selección de material</li>
+      </ul>
+    </div>
+    <div class="skill-block">
+      <p class="skill-category" data-es="Contexto" data-en="Context">Contexto</p>
+      <ul class="skill-list">
+        <li>FIFA · Qatar 2022</li>
+        <li>FIFA · CWC 2025</li>
+        <li data-es="Contenido deportivo" data-en="Sports content">Contenido deportivo</li>
+        <li>YouTube & Streaming</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─────────────────────── TRAYECTORIA ─────────────────────── -->
+<section id="trayectoria" class="trayectoria-section">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title" data-es="Trayectoria" data-en="Career Path">Trayectoria</h2>
+  </div>
+
+  <div class="trayectoria-timeline">
+
+    <div class="trayectoria-item">
+      <div class="trayectoria-dot"></div>
+      <div>
+        <p class="trayectoria-org">Radio POP 101.5 FM</p>
+        <p class="trayectoria-role" data-es="Productor de Radio" data-en="Radio Producer">Productor de Radio</p>
+        <p class="trayectoria-period">2018 – 2021</p>
+      </div>
+    </div>
+
+    <div class="trayectoria-item">
+      <div class="trayectoria-dot"></div>
+      <div>
+        <p class="trayectoria-org">TN · Todo Noticias</p>
+        <p class="trayectoria-role" data-es="Redactor Web" data-en="Web Content Writer">Redactor Web</p>
+        <p class="trayectoria-period">2021 – 2022</p>
+      </div>
+    </div>
+
+    <div class="trayectoria-item">
+      <div class="trayectoria-dot"></div>
+      <div>
+        <p class="trayectoria-org">FIFA+</p>
+        <p class="trayectoria-role" data-es="Editor de Video" data-en="Video Editor">Editor de Video</p>
+        <p class="trayectoria-period">2022 – <span data-es="hoy" data-en="present">hoy</span></p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ─────────────────────── CONTACT ─────────────────────── -->
+<section id="contact" class="contact-section">
+  <div class="contact-inner">
+    <h2 class="contact-cta">
+      <span data-es="Trabajemos" data-en="Let's work">Trabajemos</span><br><em data-es="juntos." data-en="together.">juntos.</em>
+    </h2>
+    <div class="cv-download-group">
+      <a href="CV_Matias_Korol_2026.pdf" download class="cv-btn" id="cv-btn-es">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span class="cv-btn-label">
+          <span>Descargar CV</span>
+          <span class="cv-btn-sub">Versión Español · PDF</span>
+        </span>
+      </a>
+      <a href="Matias_Korol_Resume.pdf" download class="cv-btn" id="cv-btn-en">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span class="cv-btn-label">
+          <span>Download Resume</span>
+          <span class="cv-btn-sub">English Version · PDF</span>
+        </span>
+      </a>
+    </div>
+
+    <div class="contact-links">
+      <a href="mailto:matikorol@gmail.com" class="contact-link">
+        <div class="contact-link-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div class="contact-link-text">
+          <span class="contact-link-label" data-es="Email" data-en="Email">Email</span>
+          <span class="contact-link-value">matikorol@gmail.com</span>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/in/mat%C3%ADas-korol-a370121ba/" target="_blank" rel="noopener" class="contact-link">
+        <div class="contact-link-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#C9A84C"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </div>
+        <div class="contact-link-text">
+          <span class="contact-link-label" data-es="LinkedIn" data-en="LinkedIn">LinkedIn</span>
+          <span class="contact-link-value">Matías Korol</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <p data-es="© 2026 · Matías Korol · Video Editor" data-en="© 2026 · Matías Korol · Video Editor">© 2026 · Matías Korol · Video Editor</p>
+  <p data-es="Buenos Aires, Argentina" data-en="Buenos Aires, Argentina">Buenos Aires, Argentina</p>
+</footer>
+
+<script>
+  // ─── LANGUAGE SWITCHER ───
+  function setLang(lang) {
+    document.querySelectorAll('[data-es][data-en]').forEach(el => {
+      const text = el.getAttribute(`data-${lang}`);
+      if (!text) return;
+      // If element has child elements (like spans inside), only update text nodes
+      if (el.children.length === 0) {
+        el.textContent = text;
+      } else {
+        // For elements with children (like featured-title span), handle via data attr only
+        el.textContent = text;
+      }
+    });
+
+    // Nav contact link
+    document.querySelectorAll('.nav-links a[data-es]').forEach(el => {
+      el.textContent = el.getAttribute(`data-${lang}`);
+    });
+
+    // Update active button
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent === lang.toUpperCase());
+    });
+
+    // Update FIFA+ link text (has a child span with arrow)
+    document.querySelectorAll('.fifacard-link[data-es]').forEach(el => {
+      const txt = el.getAttribute(`data-${lang}`);
+      el.innerHTML = `${txt} <span>→</span>`;
+    });
+
+    // CV buttons: show only the one matching the active language
+    const btnEs = document.getElementById('cv-btn-es');
+    const btnEn = document.getElementById('cv-btn-en');
+    if (btnEs) btnEs.style.display = lang === 'es' ? 'inline-flex' : 'none';
+    if (btnEn) btnEn.style.display = lang === 'en' ? 'inline-flex' : 'none';
+
+    localStorage.setItem('lang', lang);
+  }
+
+  // Restore saved language on load, default to English
+  const savedLang = localStorage.getItem('lang') || 'en';
+  setLang(savedLang);
+</script>
+
+<script>
+  const YT_API_KEY = 'AIzaSyBXVyQ8P-mnuyJn9nD2lH_hfWsRtWTwWQg';
+
+  const VIDEO_IDS = [
+    'zhEWqfP6V_w',
+    'kL0IkvLrQLM', 'Rb6P2sdlJTE', 'RJ4jlutcSbY', 'gbkgbbKZ1CA',
+    'c0-ZhEkEFtA', '0i-gsQJg7jc', 'KvSiRNO1BTY', 'spLV1gF0fkI',
+    'PKn143kYPdg', 'lAJVri8pFn8', 'wiiO9Fx5uLs',
+    'vCspZ8wZu1w', 'tSUynh1YwJ4', 'fDptnQBMM4M'
+  ];
+
+  function formatViews(n) {
+    if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M';
+    if (n >= 1_000) return (n / 1_000).toFixed(0) + 'K';
+    return n.toString();
+  }
+
+  async function fetchViews() {
+    // YouTube API allows max 50 ids per request
+    const chunks = [];
+    for (let i = 0; i < VIDEO_IDS.length; i += 50) {
+      chunks.push(VIDEO_IDS.slice(i, i + 50));
+    }
+
+    for (const chunk of chunks) {
+      const ids = chunk.join(',');
+      const url = `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${ids}&key=${YT_API_KEY}`;
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        if (!data.items) return;
+        data.items.forEach(item => {
+          const views = parseInt(item.statistics.viewCount, 10);
+          const formatted = formatViews(views);
+          const el = document.getElementById(`views-${item.id}`);
+          if (el) el.textContent = formatted;
+        });
+      } catch (e) {
+        console.warn('No se pudieron cargar las vistas de YouTube:', e);
+      }
+    }
+  }
+
+  fetchViews();
+</script>
+
+</body>
+</html>
