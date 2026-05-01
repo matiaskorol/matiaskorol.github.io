@@ -657,7 +657,103 @@
     color: var(--gold);
   }
 
-  /* ─── CV DOWNLOAD BUTTONS ─── */
+  .hero-formation {
+    max-width: 560px;
+    font-size: 0.85rem;
+    color: var(--dim);
+    font-style: italic;
+    letter-spacing: 0.02em;
+    line-height: 1.7;
+    margin-top: -1.5rem;
+    margin-bottom: 3rem;
+    padding-left: 1rem;
+    border-left: 2px solid rgba(201,168,76,0.35);
+  }
+
+  /* ─── TRAYECTORIA ─── */
+  .trayectoria-section { background: var(--bg2); }
+
+  .trayectoria-timeline {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 3.5rem;
+    position: relative;
+  }
+
+  .trayectoria-timeline::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: calc(16.66% + 10px);
+    right: calc(16.66% + 10px);
+    height: 1px;
+    background: linear-gradient(to right, var(--gold), var(--gold));
+    opacity: 0.3;
+  }
+
+  .trayectoria-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 2rem;
+    position: relative;
+  }
+
+  .trayectoria-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    background: var(--bg2);
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+  }
+
+  .trayectoria-item:last-child .trayectoria-dot {
+    background: var(--gold);
+    box-shadow: 0 0 16px rgba(201,168,76,0.4);
+  }
+
+  .trayectoria-org {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+  }
+
+  .trayectoria-item:last-child .trayectoria-org { color: var(--gold); }
+
+  .trayectoria-role {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 0.5rem;
+  }
+
+  .trayectoria-period {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    color: rgba(201,168,76,0.5);
+  }
+
+  @media (max-width: 600px) {
+    .trayectoria-timeline {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .trayectoria-timeline::before { display: none; }
+    .trayectoria-item { align-items: flex-start; text-align: left; flex-direction: row; gap: 1.2rem; padding: 0; }
+    .trayectoria-dot { margin-bottom: 0; margin-top: 3px; }
+  }
   .cv-download-group {
     display: flex;
     gap: 1rem;
@@ -869,6 +965,7 @@
         <li><a href="#youtube">YouTube</a></li>
         <li><a href="#fifaplus">FIFA+</a></li>
         <li><a href="#skills" data-es="Skills" data-en="Skills">Skills</a></li>
+        <li><a href="#trayectoria" data-es="Trayectoria" data-en="Career">Trayectoria</a></li>
         <li><a href="#contact" data-es="Contacto" data-en="Contact">Contacto</a></li>
       </ul>
       <div class="lang-toggle">
@@ -887,6 +984,7 @@
     <p class="hero-desc" data-es="Editor de video especializado en contenidos deportivos de alto impacto. Acostumbrado a trabajar en tiempo real bajo presión, con experiencia en FIFA hace cuatro años, donde destacan las coberturas de Qatar 2022 y el Mundial de Clubes 2025, entre otros. Integro herramientas de inteligencia artificial en flujos de edición para potenciar el resultado creativo." data-en="Video editor specialized in high-impact sports content. Experienced in working in real time under pressure, with four years at FIFA covering Qatar 2022 and the Club World Cup 2025, among others. I integrate artificial intelligence tools into editing workflows to elevate the creative output.">
       Editor de video especializado en contenidos deportivos de alto impacto. Acostumbrado a trabajar en tiempo real bajo presión, con experiencia en FIFA hace cuatro años, donde destacan las coberturas de Qatar 2022 y el Mundial de Clubes 2025, entre otros. Integro herramientas de inteligencia artificial en flujos de edición para potenciar el resultado creativo.
     </p>
+    <p class="hero-formation" data-es="Mi formación como periodista en TN (Todo Noticias) y Radio POP 101.5 FM forjó el criterio narrativo que hoy está detrás de cada corte." data-en="My background as a journalist at TN (Todo Noticias) and Radio POP 101.5 FM forged the narrative instinct behind every edit.">Mi formación como periodista en TN (Todo Noticias) y Radio POP 101.5 FM forjó el criterio narrativo que hoy está detrás de cada corte.</p>
   </div>
 
   <div class="hero-stats">
@@ -1191,6 +1289,46 @@
         <li>YouTube & Streaming</li>
       </ul>
     </div>
+  </div>
+</section>
+
+
+<!-- ─────────────────────── TRAYECTORIA ─────────────────────── -->
+<section id="trayectoria" class="trayectoria-section">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title" data-es="Trayectoria" data-en="Career Path">Trayectoria</h2>
+  </div>
+
+  <div class="trayectoria-timeline">
+
+    <div class="trayectoria-item">
+      <div class="trayectoria-dot"></div>
+      <div>
+        <p class="trayectoria-org">Radio POP 101.5 FM</p>
+        <p class="trayectoria-role" data-es="Productor de Radio" data-en="Radio Producer">Productor de Radio</p>
+        <p class="trayectoria-period">2018 – 2021</p>
+      </div>
+    </div>
+
+    <div class="trayectoria-item">
+      <div class="trayectoria-dot"></div>
+      <div>
+        <p class="trayectoria-org">TN · Todo Noticias</p>
+        <p class="trayectoria-role" data-es="Redactor Web" data-en="Web Content Writer">Redactor Web</p>
+        <p class="trayectoria-period">2021 – 2022</p>
+      </div>
+    </div>
+
+    <div class="trayectoria-item">
+      <div class="trayectoria-dot"></div>
+      <div>
+        <p class="trayectoria-org">FIFA+</p>
+        <p class="trayectoria-role" data-es="Editor de Video" data-en="Video Editor">Editor de Video</p>
+        <p class="trayectoria-period">2022 – <span data-es="hoy" data-en="present">hoy</span></p>
+      </div>
+    </div>
+
   </div>
 </section>
 
