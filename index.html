@@ -443,6 +443,42 @@
     margin-top: 0.2rem;
   }
 
+  /* ─── VERTICAL VIDEOS ─── */
+  .vertical-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+  }
+
+  .vertical-card {
+    border-radius: 3px;
+    overflow: hidden;
+    background: var(--bg2);
+    border: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+
+  .vertical-card:hover {
+    border-color: var(--border);
+  }
+
+  .vertical-thumb-wrap {
+    aspect-ratio: 9/16;
+    background: #000;
+    overflow: hidden;
+  }
+
+  .vertical-player {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .vertical-card .solo-badge {
+    margin-bottom: 0.6rem;
+  }
+
   /* ─── FIFA+ SECTION ─── */
   .fifahero-section {
     background: var(--bg2);
@@ -675,7 +711,7 @@
 
   .trayectoria-timeline {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 0;
     margin-top: 3.5rem;
     position: relative;
@@ -685,8 +721,8 @@
     content: '';
     position: absolute;
     top: 10px;
-    left: calc(16.66% + 10px);
-    right: calc(16.66% + 10px);
+    left: calc(12.5% + 10px);
+    right: calc(12.5% + 10px);
     height: 1px;
     background: linear-gradient(to right, var(--gold), var(--gold));
     opacity: 0.3;
@@ -713,7 +749,7 @@
     flex-shrink: 0;
   }
 
-  .trayectoria-item:last-child .trayectoria-dot {
+  .trayectoria-item.is-current .trayectoria-dot {
     background: var(--gold);
     box-shadow: 0 0 16px rgba(201,168,76,0.4);
   }
@@ -728,7 +764,7 @@
     margin-bottom: 0.4rem;
   }
 
-  .trayectoria-item:last-child .trayectoria-org { color: var(--gold); }
+  .trayectoria-item.is-current .trayectoria-org { color: var(--gold); }
 
   .trayectoria-role {
     font-size: 0.78rem;
@@ -939,6 +975,7 @@
     .fifaplus-grid { grid-template-columns: 1fr 1fr; }
     .skills-grid { grid-template-columns: 1fr 1fr; }
     .penalty-row { grid-template-columns: 1fr; }
+    .vertical-grid { grid-template-columns: 1fr 1fr; }
     .contact-inner { flex-direction: column; align-items: flex-start; }
     .hero-stats { gap: 2rem; flex-wrap: wrap; }
   }
@@ -947,6 +984,7 @@
     .fifaplus-grid { grid-template-columns: 1fr; }
     .skills-grid { grid-template-columns: 1fr; }
     .video-grid { grid-template-columns: 1fr; }
+    .vertical-grid { grid-template-columns: 1fr; }
     nav .nav-links { display: none; }
     section { padding: 4rem 5vw; }
   }
@@ -963,6 +1001,7 @@
     <div style="display:flex; align-items:center;">
       <ul class="nav-links">
         <li><a href="#worldcup2026" data-es="Mundial 2026" data-en="World Cup 2026">Mundial 2026</a></li>
+        <li><a href="#verticales" data-es="Videos Verticales" data-en="Vertical Videos">Videos Verticales</a></li>
         <li><a href="#youtube">YouTube</a></li>
         <li><a href="#fifaplus">FIFA+</a></li>
         <li><a href="#skills" data-es="Skills" data-en="Skills">Skills</a></li>
@@ -999,7 +1038,7 @@
     </div>
     <div class="stat-item">
       <span class="stat-num">FIFA</span>
-      <span class="stat-label" data-es="Cliente · Qatar 2022 & CWC 2025" data-en="Client · Qatar 2022 & CWC 2025">Cliente · Qatar 2022 & CWC 2025</span>
+      <span class="stat-label" data-es="Cliente · Mundiales 2026 y 2022" data-en="Client · 2026 & 2022 World Cups">Cliente · Mundiales 2026 y 2022</span>
     </div>
   </div>
 </section>
@@ -1118,10 +1157,96 @@
 </section>
 
 
+<!-- ─────────────────────── VIDEOS VERTICALES ─────────────────────── -->
+<section id="verticales">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title" data-es="Videos Verticales" data-en="Vertical Videos">Videos Verticales</h2>
+    <p class="section-sub" data-es="Formato 9:16 · Mundial 2026 y Starify" data-en="9:16 format · World Cup 2026 and Starify">Formato 9:16 · Mundial 2026 y Starify</p>
+  </div>
+
+  <div class="vertical-grid">
+
+    <div class="vertical-card">
+      <div class="vertical-thumb-wrap">
+        <video class="vertical-player" controls preload="none" playsinline poster="videos-verticales/posters/best-goals-wc2026.jpg">
+          <source src="videos-verticales/best-goals-wc2026.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-info">
+        <span class="solo-badge" data-es="Mundial 2026" data-en="World Cup 2026">Mundial 2026</span>
+        <div class="card-label" data-es="Mejores Goles del Mundial 2026" data-en="Best Goals of the World Cup 2026">Mejores Goles del Mundial 2026</div>
+      </div>
+    </div>
+
+    <div class="vertical-card">
+      <div class="vertical-thumb-wrap">
+        <video class="vertical-player" controls preload="none" playsinline poster="videos-verticales/posters/best-saves-wc2026.jpg">
+          <source src="videos-verticales/best-saves-wc2026.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-info">
+        <span class="solo-badge" data-es="Mundial 2026" data-en="World Cup 2026">Mundial 2026</span>
+        <div class="card-label" data-es="Mejores Atajadas del Mundial 2026" data-en="Best Saves of the World Cup 2026">Mejores Atajadas del Mundial 2026</div>
+      </div>
+    </div>
+
+    <div class="vertical-card">
+      <div class="vertical-thumb-wrap">
+        <video class="vertical-player" controls preload="none" playsinline poster="videos-verticales/posters/best-assists-wc2026.jpg">
+          <source src="videos-verticales/best-assists-wc2026.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-info">
+        <span class="solo-badge" data-es="Mundial 2026" data-en="World Cup 2026">Mundial 2026</span>
+        <div class="card-label" data-es="Mejores Asistencias del Mundial 2026" data-en="Best Assists of the World Cup 2026">Mejores Asistencias del Mundial 2026</div>
+      </div>
+    </div>
+
+    <div class="vertical-card">
+      <div class="vertical-thumb-wrap">
+        <video class="vertical-player" controls preload="none" playsinline poster="videos-verticales/posters/starify-website-video.jpg">
+          <source src="videos-verticales/starify-website-video.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-info">
+        <span class="solo-badge">Starify</span>
+        <div class="card-label" data-es="Video para el Sitio Web · Starify" data-en="Starify Website Video">Video para el Sitio Web · Starify</div>
+      </div>
+    </div>
+
+    <div class="vertical-card">
+      <div class="vertical-thumb-wrap">
+        <video class="vertical-player" controls preload="none" playsinline poster="videos-verticales/posters/starify-client.jpg">
+          <source src="videos-verticales/starify-client.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-info">
+        <span class="solo-badge">Starify</span>
+        <div class="card-label" data-es="Cliente Starify" data-en="Starify Client">Cliente Starify</div>
+      </div>
+    </div>
+
+    <div class="vertical-card">
+      <div class="vertical-thumb-wrap">
+        <video class="vertical-player" controls preload="none" playsinline poster="videos-verticales/posters/starify-testimonial.jpg">
+          <source src="videos-verticales/starify-testimonial.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-info">
+        <span class="solo-badge">Starify</span>
+        <div class="card-label" data-es="Video Testimonial · Starify" data-en="Starify Testimonial Video">Video Testimonial · Starify</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
 <!-- ─────────────────────── YOUTUBE: HIGHLIGHTS QATAR ─────────────────────── -->
 <section id="youtube">
   <div class="section-header">
-    <span class="section-num">02</span>
+    <span class="section-num">03</span>
     <h2 class="section-title" data-es="Highlights · Qatar 2022" data-en="Highlights · Qatar 2022">Highlights · Qatar 2022</h2>
     <p class="section-sub" data-es="YouTube · Producción en tiempo real durante el torneo" data-en="YouTube · Real-time production throughout the tournament">YouTube · Producción en tiempo real durante el torneo</p>
   </div>
@@ -1234,7 +1359,7 @@
 <!-- ─────────────────────── YOUTUBE: PENALES ─────────────────────── -->
 <section style="padding-top: 0; padding-bottom: 5rem; padding-left: 6vw; padding-right: 6vw;">
   <div class="section-header">
-    <span class="section-num">03</span>
+    <span class="section-num">04</span>
     <h2 class="section-title" data-es="Tandas de Penales · Mundiales" data-en="Penalty Shootouts · World Cups">Tandas de Penales · Mundiales</h2>
     <p class="section-sub" data-es="YouTube · Compilaciones históricas" data-en="YouTube · Historical compilations">YouTube · Compilaciones históricas</p>
   </div>
@@ -1306,7 +1431,7 @@
 <!-- ─────────────────────── FIFA+ ─────────────────────── -->
 <section id="fifaplus" class="fifahero-section">
   <div class="section-header">
-    <span class="section-num">04</span>
+    <span class="section-num">05</span>
     <h2 class="section-title" data-es="FIFA+ · Mundial de Clubes 2025" data-en="FIFA+ · Club World Cup 2025">FIFA+ · Mundial de Clubes 2025</h2>
     <p class="section-sub" data-es="Producción editorial completa en portada FIFA+" data-en="Full editorial production on FIFA+ frontpage">Producción editorial completa en portada FIFA+</p>
   </div>
@@ -1362,7 +1487,7 @@
 <!-- ─────────────────────── SKILLS ─────────────────────── -->
 <section id="skills" class="skills-section">
   <div class="section-header">
-    <span class="section-num">05</span>
+    <span class="section-num">06</span>
     <h2 class="section-title" data-es="Herramientas & Skills" data-en="Tools & Skills">Herramientas & Skills</h2>
   </div>
 
@@ -1410,7 +1535,7 @@
 <!-- ─────────────────────── TRAYECTORIA ─────────────────────── -->
 <section id="trayectoria" class="trayectoria-section">
   <div class="section-header">
-    <span class="section-num">06</span>
+    <span class="section-num">07</span>
     <h2 class="section-title" data-es="Trayectoria" data-en="Career Path">Trayectoria</h2>
   </div>
 
@@ -1434,12 +1559,21 @@
       </div>
     </div>
 
-    <div class="trayectoria-item">
+    <div class="trayectoria-item is-current">
       <div class="trayectoria-dot"></div>
       <div>
         <p class="trayectoria-org">FIFA+</p>
         <p class="trayectoria-role" data-es="Editor de Video" data-en="Video Editor">Editor de Video</p>
         <p class="trayectoria-period">2022 – <span data-es="hoy" data-en="present">hoy</span></p>
+      </div>
+    </div>
+
+    <div class="trayectoria-item is-current">
+      <div class="trayectoria-dot"></div>
+      <div>
+        <p class="trayectoria-org">Starify</p>
+        <p class="trayectoria-role" data-es="Editor de Video Líder" data-en="Lead Video Editor">Editor de Video Líder</p>
+        <p class="trayectoria-period">2026 – <span data-es="hoy" data-en="present">hoy</span></p>
       </div>
     </div>
 
